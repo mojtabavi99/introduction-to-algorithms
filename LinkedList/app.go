@@ -3,24 +3,40 @@ package main
 import "fmt"
 
 func main() {
-	linked_list := LinkedList{}
+    linkedList := LinkedList{}
 
-	linked_list.Append(20)
-	linked_list.Append(30)
-	linked_list.Append(40)
+    linkedList.Append(20)
+    linkedList.Append(30)
+    linkedList.Append(40)
+    linkedList.Append(50)
+    linkedList.Append(60)
+    linkedList.Prepend(10)
 
-    linked_list.Prepend(10)
+    fmt.Println("Initial list:")
+    linkedList.Print()
 
-	node := linked_list.Find(30)
-	if node != nil {
-		fmt.Println(node.Value, " Founded")
-	} else {
-		fmt.Println("Node not found")
-	}
+    // Find node
+    node := linkedList.Find(30)
+    if node != nil {
+        fmt.Println(node.Value, "found")
+    } else {
+        fmt.Println("Node not found")
+    }
 
-    linked_list.Length()
-    linked_list.Delete(20)
-    linked_list.Length()
+    // Get node at index
+    node, result := linkedList.Get(2)
+    if result {
+        fmt.Println("Index 2:", node.Value)
+    } else {
+        fmt.Println("Index out of bounds")
+    }
 
-	linked_list.Print()
+    // Set value
+    linkedList.Set(4, 90)
+
+    // Insert node
+    linkedList.Insert(5, 100)
+
+    fmt.Println("Final list:")
+    linkedList.Print()
 }

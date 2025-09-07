@@ -2,113 +2,146 @@ package main
 
 import "fmt"
 
-// LinkedList represents a doubly linked list
-// with Head and Tail pointers for efficient access
-// to the beginning and end of the list.
+// Node represents a single element in a doubly linked list.
+// Each node contains an integer Value and pointers to the next and previous nodes.
+type Node struct {
+    Value int   // The value stored in the node
+    Next  *Node // Pointer to the next node in the list (nil if this is the last node)
+    Prev  *Node // Pointer to the previous node in the list (nil if this is the first node)
+}
+
+// LinkedList represents a doubly linked list.
 type LinkedList struct {
-	Head *Node // Pointer to the first node in the list
-	Tail *Node // Pointer to the last node in the list
+    Head *Node // Pointer to the first node
+    Tail *Node // Pointer to the last node
 }
 
-// Append adds a new value at the end of the list.
-// If the list is empty, the new node becomes both Head and Tail.
+// Append adds a new node with the given value at the end of the list.
 func (list *LinkedList) Append(value int) {
-	node := &Node{Value: value}
-	if list.Head == nil {
-		list.Head = node
-		list.Tail = node
-		return
-	}
-
-	list.Tail.Next = node
-	node.Prev = list.Tail
-	list.Tail = node
+    node := &Node{Value: value}
+    if list.Head == nil {
+        list.Head = node
+        list.Tail = node
+        return
+    }
+    list.Tail.Next = node
+    node.Prev = list.Tail
+    list.Tail = node
 }
 
-// Prepend adds a new value at the beginning of the list.
-// If the list is empty, the new node becomes both Head and Tail.
+// Prepend adds a new node with the given value at the beginning of the list.
 func (list *LinkedList) Prepend(value int) {
-	node := &Node{Value: value, Next: list.Head}
-	if list.Head == nil {
-		list.Head = node
-		list.Tail = node
-		return
-	}
-
-	node.Next = list.Head
-	list.Head.Prev = node
-	list.Head = node
+    node := &Node{Value: value}
+    if list.Head == nil {
+        list.Head = node
+        list.Tail = node
+        return
+    }
+    node.Next = list.Head
+    list.Head.Prev = node
+    list.Head = node
 }
 
-// Delete removes the first node with the specified value from the list.
-// If the node is Head or Tail, the corresponding pointers are updated.
-func (list *LinkedList) Delete(value int) {
-	current := list.Head
-
-	for current != nil {
-		if current.Value == value {
-			if current.Prev != nil {
-				current.Prev.Next = current.Next
-			} else {
-				list.Head = current.Next
-			}
-
-			if current.Next != nil {
-				current.Next.Prev = current.Prev
-			} else {
-				list.Tail = current.Prev
-			}
-
-			return
-		}
-		current = current.Next
-	}
-}
-
-// Length returns the number of nodes in the linked list.
-// It iterates from Head to Tail and counts each node.
+// Length returns the number of nodes in the list.
 func (list *LinkedList) Length() int {
     length := 0
     current := list.Head
-    if current == nil {
-        return 0
-    }
-
     for current != nil {
         length++
         current = current.Next
     }
-
     return length
 }
 
-
-// Find searches for the first node with the specified value.
-// Returns a pointer to the node if found, otherwise returns nil.
+// Find searches for the first node with the given value.
 func (list *LinkedList) Find(value int) *Node {
-	current := list.Head
-	for current != nil {
-		if current.Value == value {
-			return current
-		}
-		current = current.Next
-	}
-    fmt.Println("Node deleted ")
-	return nil
+    current := list.Head
+    for current != nil {
+        if current.Value == value {
+            return current
+        }
+        current = current.Next
+    }
+    return nil
 }
 
-// Print displays the list from Head to Tail.
-func (list *LinkedList) Print() {
-    if list.Head == nil {
-        fmt.Println("Linked list is empty!")
+// Get returns the node at the specified index (0-based).
+// Returns false if index is out of bounds.
+func (list *LinkedList) Get(index int) (*Node, bool) {
+    if index < 0 || index >= list.Length() {
+        return nil, false
     }
-	current := list.Head
-	for current != nil {
-        if current != list.Tail {
-            fmt.Printf("%d -> ", current.Value)
-        } else {
-            fmt.Println(list.Tail.Value)
+
+    current := list.Head
+    for i := 0; i < index; i++ {
+        current = current.Next
+    }
+
+    return current, true
+}
+
+// Set updates the value of the node at the specified index.
+func (list *LinkedList) Set(index int, value int) bool {
+    node, ok := list.Get(index)
+    if ok {
+        node.Value = value
+    }
+    return ok
+}
+
+// Insert adds a new node with the given value at the specified index.
+func (list *LinkedList) Insert(index int, value int) {
+    if index < 0 || index > list.Length() {
+        return
+    }
+
+    if index == 0 {
+        list.Prepend(value)
+        return
+    }
+
+    if index == list.Length() {
+        list.Append(value)
+        return
+    }
+
+    nextNode, _ := list.Get(index)
+    prevNode := nextNode.Prev
+
+    newNode := &Node{Value: value, Next: nextNode, Prev: prevNode}
+    if prevNode != nil {
+        prevNode.Next = newNode
+    }
+    nextNode.Prev = newNode
+}
+
+// Remove deletes the first node with the given value from the list.
+func (list *LinkedList) Remove(value int) {
+    current := list.Head
+    for current != nil {
+        if current.Value == value {
+            if current.Prev != nil {
+                current.Prev.Next = current.Next
+            } else {
+                list.Head = current.Next
+            }
+            if current.Next != nil {
+                current.Next.Prev = current.Prev
+            } else {
+                list.Tail = current.Prev
+            }
+            return
         }
-		current = current.Next
-	}
+        current = current.Next
+    }
+}
+
+// Print prints all values in the linked list.
+func (list *LinkedList) Print() {
+    current := list.Head
+    for current != nil {
+        fmt.Printf("%d -> ", current.Value)
+        current = current.Next
+    }
+    fmt.Println("nil")
 }
