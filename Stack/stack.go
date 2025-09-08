@@ -1,42 +1,66 @@
 package main
 
+import "fmt"
+
+// Node represents a single element in a stack.
+// Each node contains an integer Value and pointers to the next nodes.
+type Node struct {
+    Value int   // The value stored in the node
+    Next  *Node // Pointer to the next node in the list (nil if this is the last node)
+}
+
 // Stack represents a LIFO stack of integers.
 type Stack struct {
-	items []int
+	Top *Node
+	Height int
 }
 
 // Push adds a value to the top of the stack
 func (stack *Stack) Push(value int) {
-	stack.items = append(stack.items, value)
+	node := &Node{Value: value}
+	if stack.Height == 0 {
+		stack.Top = node
+		stack.Height = 1
+	} else {
+		stack.Height += 1
+
+		temp := stack.Top
+		stack.Top = node
+		stack.Top.Next = temp
+	}
 }
 
 // Pop removes and returns the value from the top of the stack
 // Returns false if the stack is empty.
-func (stack *Stack) Pop() (int, bool) {
-	if len(stack.items) == 0 {
-		return 0, false
+func (stack *Stack) Pop() {
+	if stack.Height != 0 {
+		top := stack.Top.Next
+		stack.Top = top
+		stack.Height -= 1
 	}
-
-	top := stack.items[len(stack.items)-1]
-	stack.items = stack.items[:len(stack.items)-1]
-	return top, true
 }
 
 // Peek returns the value at the top of the stack without removing it
 // Returns false if the stack is empty.
 func (stack *Stack) Peek() (int, bool) {
-    if len(stack.items) == 0 {
-        return 0, false
-    }
-    return stack.items[len(stack.items)-1], true
+    if stack.Height == 0 {
+		return 0, false
+	}
+
+	return stack.Top.Value, true
 }
 
 // IsEmpty checks if the stack is empty.
 func (stack *Stack) IsEmpty() bool {
-    return len(stack.items) == 0
+    return stack.Height == 0
 }
 
-// Length returns the number of elements in the stack.
-func (stack *Stack) Length() int {
-	return len(stack.items)
+// Print prints all values in the stack.
+func (list *Stack) Print() {
+    current := list.Top
+    for current != nil {
+        fmt.Printf("%d -> ", current.Value)
+        current = current.Next
+    }
+    fmt.Println("nil")
 }
