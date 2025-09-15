@@ -1,23 +1,23 @@
-package main
+package structures
 
 import "fmt"
 
-// Node represents a single element in a stack.
+// StackNode represents a single element in a stack.
 // Each node contains an integer Value and pointers to the next nodes.
-type Node struct {
+type StackNode struct {
     Value int   // The value stored in the node
-    Next  *Node // Pointer to the next node in the list (nil if this is the last node)
+    Next  *StackNode // Pointer to the next node in the list (nil if this is the last node)
 }
 
 // Stack represents a LIFO stack of integers.
 type Stack struct {
-	Top *Node
+	Top *StackNode
 	Height int
 }
 
 // Push adds a value to the top of the stack
 func (stack *Stack) Push(value int) {
-	node := &Node{Value: value}
+	node := &StackNode{Value: value}
 	if stack.Height == 0 {
 		stack.Top = node
 		stack.Height = 1

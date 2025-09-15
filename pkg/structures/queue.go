@@ -1,23 +1,23 @@
-package main
+package structures
 
 // import "fmt"
 
-// Node represents a single element in a doubly linked list.
+// QueueNode represents a single element in a doubly linked list.
 // Each node contains an integer Value and pointers to the next and previous nodes.
-type Node struct {
+type QueueNode struct {
     Value int   // The value stored in the node
-    Next  *Node // Pointer to the next node in the list (nil if this is the last node)
+    Next  *QueueNode // Pointer to the next node in the list (nil if this is the last node)
 }
 
 // Queue represents a queue list.
 type Queue struct {
-    First *Node // Pointer to the first node
-    Last *Node // Pointer to the last node
+    First *QueueNode // Pointer to the first node
+    Last *QueueNode // Pointer to the last node
 	Length int
 }
 
-func (queue *Queue) enqueue(value int) {
-	node := &Node{Value: value}
+func (queue *Queue) Enqueue(value int) {
+	node := &QueueNode{Value: value}
 	if  queue.Length == 0 {
 		queue.First = node
 		queue.Last = node
@@ -30,7 +30,7 @@ func (queue *Queue) enqueue(value int) {
 	}
 }
 
-func (queue *Queue) dequeue() {
+func (queue *Queue) Dequeue() {
 	if queue.Length != 0 {
 		if queue.Length == 1 {
 			queue.First = nil
@@ -45,6 +45,6 @@ func (queue *Queue) dequeue() {
 	}
 }
 
-func (queue *Queue) print() {
+func (queue *Queue) Print() {
 
 }

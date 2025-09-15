@@ -1,24 +1,24 @@
-package main
+package structures
 
 import "fmt"
 
-// Node represents a single element in a doubly linked list.
+// ListNode represents a single element in a doubly linked list.
 // Each node contains an integer Value and pointers to the next and previous nodes.
-type Node struct {
+type ListNode struct {
     Value int   // The value stored in the node
-    Next  *Node // Pointer to the next node in the list (nil if this is the last node)
-    Prev  *Node // Pointer to the previous node in the list (nil if this is the first node)
+    Next  *ListNode // Pointer to the next node in the list (nil if this is the last node)
+    Prev  *ListNode // Pointer to the previous node in the list (nil if this is the first node)
 }
 
 // LinkedList represents a doubly linked list.
 type LinkedList struct {
-    Head *Node // Pointer to the first node
-    Tail *Node // Pointer to the last node
+    Head *ListNode // Pointer to the first node
+    Tail *ListNode // Pointer to the last node
 }
 
 // Append adds a new node with the given value at the end of the list.
 func (list *LinkedList) Append(value int) {
-    node := &Node{Value: value}
+    node := &ListNode{Value: value}
     if list.Head == nil {
         list.Head = node
         list.Tail = node
@@ -31,7 +31,7 @@ func (list *LinkedList) Append(value int) {
 
 // Prepend adds a new node with the given value at the beginning of the list.
 func (list *LinkedList) Prepend(value int) {
-    node := &Node{Value: value}
+    node := &ListNode{Value: value}
     if list.Head == nil {
         list.Head = node
         list.Tail = node
@@ -54,7 +54,7 @@ func (list *LinkedList) Length() int {
 }
 
 // Find searches for the first node with the given value.
-func (list *LinkedList) Find(value int) *Node {
+func (list *LinkedList) Find(value int) *ListNode {
     current := list.Head
     for current != nil {
         if current.Value == value {
@@ -67,7 +67,7 @@ func (list *LinkedList) Find(value int) *Node {
 
 // Get returns the node at the specified index (0-based).
 // Returns false if index is out of bounds.
-func (list *LinkedList) Get(index int) (*Node, bool) {
+func (list *LinkedList) Get(index int) (*ListNode, bool) {
     if index < 0 || index >= list.Length() {
         return nil, false
     }
@@ -105,14 +105,14 @@ func (list *LinkedList) Insert(index int, value int) {
         return
     }
 
-    nextNode, _ := list.Get(index)
-    prevNode := nextNode.Prev
+    nextListNode, _ := list.Get(index)
+    prevListNode := nextListNode.Prev
 
-    newNode := &Node{Value: value, Next: nextNode, Prev: prevNode}
-    if prevNode != nil {
-        prevNode.Next = newNode
+    newListNode := &ListNode{Value: value, Next: nextListNode, Prev: prevListNode}
+    if prevListNode != nil {
+        prevListNode.Next = newListNode
     }
-    nextNode.Prev = newNode
+    nextListNode.Prev = newListNode
 }
 
 // Remove deletes the first node with the given value from the list.
