@@ -10,7 +10,7 @@ func main() {
 	fmt.Println("----------------------")
 	fmt.Println("Linked List Section")
 	fmt.Println("----------------------")
-	linkedList := &structures.LinkedList{}
+	linkedList := structures.LinkedList{}
 
 	linkedList.Append(20)
 	linkedList.Append(30)
@@ -51,7 +51,7 @@ func main() {
 	fmt.Println("----------------------")
 	fmt.Println("Stack Section")
 	fmt.Println("----------------------")
-	stack := &structures.Stack{}
+	stack := structures.Stack{}
 
 	stack.Push(10)
 	stack.Push(20)
@@ -73,7 +73,7 @@ func main() {
 	fmt.Println("----------------------")
 	fmt.Println("Queue Section")
 	fmt.Println("----------------------")
-	queue := &structures.Queue{}
+	queue := structures.Queue{}
 
 	queue.Enqueue(10)
 	queue.Enqueue(20)
@@ -81,6 +81,11 @@ func main() {
 	queue.Enqueue(40)
 	queue.Enqueue(50)
 
+	fmt.Println("First element of Queue: ", queue.First.Value)
+	fmt.Println("Last element of Queue: ", queue.Last.Value)
+	fmt.Println("Length of Queue: ", queue.Length)
+
+	fmt.Println("Dequeue executed")
 	queue.Dequeue()
 
 	queue.Print()

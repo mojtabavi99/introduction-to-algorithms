@@ -1,6 +1,6 @@
 package structures
 
-// import "fmt"
+import "fmt"
 
 // QueueNode represents a single element in a doubly linked list.
 // Each node contains an integer Value and pointers to the next and previous nodes.
@@ -23,9 +23,8 @@ func (queue *Queue) Enqueue(value int) {
 		queue.Last = node
 		queue.Length = 1
 	} else {
-		current_last_node := queue.Last
+		queue.Last.Next = node
 		queue.Last = node
-		queue.Last.Next = current_last_node
 		queue.Length += 1
 	}
 }
@@ -46,5 +45,10 @@ func (queue *Queue) Dequeue() {
 }
 
 func (queue *Queue) Print() {
-
+	current_node := queue.First
+    for current_node != nil {
+        fmt.Printf("%d -> ", current_node.Value)
+        current_node = current_node.Next
+    }
+    fmt.Println("nil")
 }
