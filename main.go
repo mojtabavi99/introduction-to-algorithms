@@ -6,18 +6,17 @@ import (
 )
 
 func main() {
+	values := []int{50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45}
+
 	// Linked List Section
 	fmt.Println("----------------------")
 	fmt.Println("Linked List Section")
 	fmt.Println("----------------------")
-	linkedList := structures.LinkedList{}
 
-	linkedList.Append(20)
-	linkedList.Append(30)
-	linkedList.Append(40)
-	linkedList.Append(50)
-	linkedList.Append(60)
-	linkedList.Prepend(10)
+	linkedList := structures.LinkedList{}
+	for _, v := range values {
+		linkedList.Append(v)
+	}
 
 	fmt.Println("Initial list:")
 	linkedList.Print()
@@ -51,17 +50,16 @@ func main() {
 	fmt.Println("----------------------")
 	fmt.Println("Stack Section")
 	fmt.Println("----------------------")
+
 	stack := structures.Stack{}
+	for _, v := range values {
+		stack.Push(v)
+	}
 
-	stack.Push(10)
-	stack.Push(20)
-	stack.Push(30)
-	stack.Push(40)
-
-	fmt.Println("Stack Height:", stack.Height)
+	fmt.Println("Stack height:", stack.Height)
 
 	top, _ := stack.Peek()
-	fmt.Println("Top:", top)
+	fmt.Println("Top element:", top)
 
 	if !stack.IsEmpty() {
 		stack.Pop()
@@ -73,13 +71,11 @@ func main() {
 	fmt.Println("----------------------")
 	fmt.Println("Queue Section")
 	fmt.Println("----------------------")
-	queue := structures.Queue{}
 
-	queue.Enqueue(10)
-	queue.Enqueue(20)
-	queue.Enqueue(30)
-	queue.Enqueue(40)
-	queue.Enqueue(50)
+	queue := structures.Queue{}
+	for _, v := range values {
+		queue.Enqueue(v)
+	}
 
 	fmt.Println("First element of Queue: ", queue.First.Value)
 	fmt.Println("Last element of Queue: ", queue.Last.Value)
@@ -89,4 +85,29 @@ func main() {
 	queue.Dequeue()
 
 	queue.Print()
+
+	// BST (binary search tree)
+	fmt.Println("----------------------")
+	fmt.Println("BST Section")
+	fmt.Println("----------------------")
+	
+	bst := structures.BinarySearchTree{}
+	for _, v := range values {
+		bst.Insert(v)
+	}
+
+	bst.PrettyPrint()
+	fmt.Println()
+
+	fmt.Printf("In order: ")
+	bst.InOrder()
+	fmt.Println()
+
+	fmt.Printf("Pre order: ")
+	bst.PreOrder()
+	fmt.Println()
+
+	bst.Delete(40)
+    fmt.Println("\nAfter delete 40")
+    bst.PrettyPrint()
 }

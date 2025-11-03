@@ -73,7 +73,7 @@ func (list *LinkedList) Get(index int) (*ListNode, bool) {
     }
 
     current := list.Head
-    for i := 0; i < index; i++ {
+    for range index {
         current = current.Next
     }
 
