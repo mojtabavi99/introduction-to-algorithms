@@ -90,7 +90,7 @@ func main() {
 	fmt.Println("----------------------")
 	fmt.Println("BST Section")
 	fmt.Println("----------------------")
-	
+
 	bst := structures.BinarySearchTree{}
 	for _, v := range values {
 		bst.Insert(v)
@@ -108,6 +108,30 @@ func main() {
 	fmt.Println()
 
 	bst.Delete(40)
-    fmt.Println("\nAfter delete 40")
-    bst.PrettyPrint()
+	fmt.Println("\nAfter delete 40")
+	bst.PrettyPrint()
+
+	// Graph
+	fmt.Println("----------------------")
+	fmt.Println("Graph Section")
+	fmt.Println("----------------------")
+
+	graph := structures.GraphInit(false)
+	fmt.Println(graph)
+	graph.AddEdge("A", "B")
+	graph.AddEdge("A", "C")
+	graph.AddEdge("A", "E")
+	graph.AddEdge("B", "D")
+	graph.AddEdge("C", "D")
+	graph.AddEdge("D", "E")
+
+	graph.PrettyPrint()
+	fmt.Println("HasEdge(A, B):", graph.HasEdge("A", "B"))
+	fmt.Println("HasEdge(C, E):", graph.HasEdge("C", "E"))
+
+	fmt.Printf("Vertex D removed")
+	graph.RemoveVertex("D")
+
+	fmt.Println("\nAfter modifications:")
+	graph.PrettyPrint()
 }
